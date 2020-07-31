@@ -1,0 +1,1 @@
+make ARCH=arm uImage LOADADDR=0x40008000 -j8
