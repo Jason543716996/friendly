@@ -15,6 +15,7 @@
 #include "exynos4412.dtsi"
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/usb4640/usb4640.h>
+#include <dt-bindings/interrupt-controller/irq.h>
 / {
 	model = "FriendlyARM TINY4412 board based on Exynos4412";
 	compatible = "friendlyarm,tiny4412", "samsung,exynos4412", "samsung,exynos4";
@@ -101,6 +102,19 @@
         };
 };
 
+&i2c_1 {
+    samsung,i2c-sda-delay = <100>;
+    samsung,i2c-max-bus-freq = <400000>;
+    status = "okay";
+    polytouch: edt-ft5x06@38 { 
+        compatible = "edt,edt-ft5406", "edt,edt-ft5x06";
+		reg = <0x38>;
+		interrupt-parent = <&gpx1>;
+		interrupts = <6 IRQ_TYPE_EDGE_FALLING>; 
+        touchscreen-size-x = <800>;
+        touchscreen-size-y = <480>;
+    }; 
+};
 &pinctrl_1 {
         backlight_out: backlight_out{
                 samsung,pins = "gpx1-2";
