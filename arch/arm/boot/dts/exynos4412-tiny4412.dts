@@ -28,36 +28,44 @@
 	memory {
 		reg = <0x40000000 0x40000000>;
 	};
-
-	leds {
-		compatible = "gpio-leds";
-
-		led1 {
-			label = "led1";
-			gpios = <&gpm4 0 GPIO_ACTIVE_LOW>;
-			default-state = "off";
-			linux,default-trigger = "heartbeat";
-		};
-
-		led2 {
-			label = "led2";
-			gpios = <&gpm4 1 GPIO_ACTIVE_LOW>;
-			default-state = "off";
-		};
-
-		led3 {
-			label = "led3";
-			gpios = <&gpm4 2 GPIO_ACTIVE_LOW>;
-			default-state = "off";
-		};
-
-		led4 {
-			label = "led4";
-			gpios = <&gpm4 3 GPIO_ACTIVE_LOW>;
-			default-state = "off";
-			linux,default-trigger = "mmc0";
-		};
+	led_pin {
+		compatible         = "tiny4412,led_demo";
+		pinctrl-names = "led_demo";
+		pinctrl-0 = <&led_demo>;
+		tiny4412,int_gpio1 = <&gpm4 0 GPIO_ACTIVE_HIGH>;
+		tiny4412,int_gpio2 = <&gpm4 1 GPIO_ACTIVE_HIGH>;
+		tiny4412,int_gpio3 = <&gpm4 2 GPIO_ACTIVE_HIGH>;
+		tiny4412,int_gpio4 = <&gpm4 3 GPIO_ACTIVE_HIGH>;
 	};
+//	leds {
+//		compatible = "gpio-leds";
+//
+//		led1 {
+//			label = "led1";
+//			gpios = <&gpm4 0 GPIO_ACTIVE_LOW>;
+//			default-state = "off";
+//			linux,default-trigger = "heartbeat";
+//		};
+//
+//		led2 {
+//			label = "led2";
+//			gpios = <&gpm4 1 GPIO_ACTIVE_LOW>;
+//			default-state = "off";
+//		};
+//
+//		led3 {
+//			label = "led3";
+//			gpios = <&gpm4 2 GPIO_ACTIVE_LOW>;
+//			default-state = "off";
+//		};
+//
+//		led4 {
+//			label = "led4";
+//			gpios = <&gpm4 3 GPIO_ACTIVE_LOW>;
+//			default-state = "off";
+//			linux,default-trigger = "mmc0";
+//		};
+//	};
 
 	fixed-rate-clocks {
 		xxti {
@@ -149,6 +157,12 @@
                 samsung,pin-pud = <0>;
                 samsung,pin-drv = <0>;
         };
+	led_demo:led{
+		  samsung,pins = "gpm4-0", "gpm4-1" ,"gpm4-2", "gpm4-3";
+		  samsung,pin-function = <0x1>;   //1为输出
+		  samsung,pin-pud = <0x0>;        //没有上拉
+		  samsung,pin-drv = <0x0>;        //驱动强度？
+	  };
 };
 &rtc {
 	status = "okay";
@@ -223,4 +237,5 @@
 &hsotg {
     status = "okay";
 };
+
 
